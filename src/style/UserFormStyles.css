@@ -1,0 +1,34 @@
+.user-form-container {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .user-form-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-form-container label {
+    margin: 10px 0 5px;
+  }
+  
+  .user-form-container input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .user-form-container button {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .error {
+    color: red;
+  }
+  

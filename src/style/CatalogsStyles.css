@@ -1,0 +1,147 @@
+.catalogs-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 40px;
+  background-color: #e3f2fd;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.catalog-section {
+  width: 48%;
+  min-width: 350px;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease-in-out;
+}
+
+.catalog-section:hover {
+  transform: translateY(-5px);
+}
+
+.catalog-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #1565c0;
+}
+
+.catalog-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.catalog-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #f1f8ff;
+  border-radius: 8px;
+  margin: 8px 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.catalog-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-add,
+.btn-save,
+.btn-edit,
+.btn-delete,
+.btn-done {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-add {
+  background-color: #2e7d32;
+}
+
+.btn-add:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+}
+
+.btn-save {
+  background-color: #1565c0;
+}
+
+.btn-save:hover {
+  background-color: #0d47a1;
+  transform: scale(1.05);
+}
+
+.btn-edit {
+  background-color: #ff9800;
+}
+
+.btn-edit:hover {
+  background-color: #e65100;
+  transform: scale(1.05);
+}
+
+.btn-delete {
+  background-color: #d32f2f;
+}
+
+.btn-delete:hover {
+  background-color: #b71c1c;
+  transform: scale(1.05);
+}
+
+.btn-done {
+  background-color: #388e3c;
+}
+
+.btn-done:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+}
+
+.input-add,
+.input-edit {
+  width: 65%;
+  padding: 10px;
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #ffffff;
+  transition: border-color 0.3s;
+}
+
+.input-add:focus,
+.input-edit:focus {
+  border-color: #1976d2;
+  outline: none;
+  background-color: #f0f9ff;
+}
+
+.catalog-loading,
+.catalog-error {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 25px;
+  font-weight: bold;
+}
+
+.catalog-loading {
+  color: #0288d1;
+}
+
+.catalog-error {
+  color: #d32f2f;
+}

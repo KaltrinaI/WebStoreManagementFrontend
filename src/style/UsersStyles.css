@@ -1,0 +1,23 @@
+.users-container {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .users-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .users-table th, .users-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .delete-btn {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  

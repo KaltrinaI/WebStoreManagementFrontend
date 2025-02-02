@@ -1,0 +1,140 @@
+.order-details-container {
+  max-width: 850px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #e3f2fd;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+}
+
+.order-details-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.order-details-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #1565c0;
+  text-transform: uppercase;
+}
+
+.order-details-loading,
+.order-details-error {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #37474f;
+}
+
+.order-details-container p {
+  margin: 12px 0;
+  font-size: 17px;
+  color: #455a64;
+}
+
+.order-details-container h2 {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #0d47a1;
+}
+
+.order-details-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-details-container li {
+  background-color: #ffffff;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #90caf9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.order-details-container li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.order-details-container li span {
+  display: block;
+  margin: 6px 0;
+  font-weight: bold;
+  color: #1565c0;
+}
+
+.status-dropdown {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #1976d2;
+  font-size: 1rem;
+  background-color: #ffffff;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.status-dropdown:focus {
+  border-color: #0d47a1;
+  outline: none;
+}
+
+.btn-update-status {
+  margin-top: 12px;
+  padding: 12px 20px;
+  background-color: #2e7d32;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-update-status:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+}
+
+.status-update-success {
+  color: #2e7d32;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.status-update-error {
+  color: #d32f2f;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .order-details-container {
+    padding: 20px;
+  }
+
+  .order-details-title {
+    font-size: 22px;
+  }
+
+  .order-details-container p,
+  .order-details-container li {
+    font-size: 15px;
+  }
+
+  .btn-update-status {
+    width: 100%;
+    text-align: center;
+  }
+}

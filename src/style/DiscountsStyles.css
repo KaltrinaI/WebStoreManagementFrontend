@@ -1,0 +1,79 @@
+.discounts-container {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #e3f2fd;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+}
+
+.discounts-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.discounts-title {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1565c0;
+  text-transform: uppercase;
+}
+
+.discounts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.discounts-table th,
+.discounts-table td {
+  padding: 12px;
+  text-align: center;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.discounts-table th {
+  background-color: #1976d2;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.discounts-table tbody tr:hover {
+  background-color: #f1f8ff;
+  transition: background-color 0.3s;
+}
+
+.discounts-loading,
+.discounts-error,
+.discounts-empty {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.btn-view {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-view:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+}

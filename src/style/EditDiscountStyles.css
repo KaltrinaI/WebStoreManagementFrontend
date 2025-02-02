@@ -1,0 +1,85 @@
+.edit-discount-container {
+  max-width: 520px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #e3f2fd;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+}
+
+.edit-discount-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.edit-discount-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #1565c0;
+  text-transform: uppercase;
+}
+
+.edit-discount-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #37474f;
+}
+
+.edit-discount-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #90caf9;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.edit-discount-input:focus {
+  border-color: #1565c0;
+  background-color: #f0f9ff;
+  outline: none;
+}
+
+.edit-discount-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-save,
+.btn-cancel {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-save {
+  background-color: #2e7d32;
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+}
+
+.btn-cancel:hover {
+  background-color: #b71c1c;
+  transform: scale(1.05);
+}
