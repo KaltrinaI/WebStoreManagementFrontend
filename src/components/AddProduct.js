@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "./fetchWithAuth";
 import "../style/FormStyles.css";
-import config from "./config";
-
+import config from "../config";
 
 function AddProduct() {
   const [name, setName] = useState("");
