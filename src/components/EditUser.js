@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../style/UserFormStyles.css";
+import config from "../config";;
 
 function EditUser() {
   const { userId } = useParams();
@@ -19,7 +20,7 @@ function EditUser() {
 
   const fetchUserDetails = async () => {
     try {
-      const response = await fetchWithAuth(`https://localhost:7059/api/v1/users/${userId}`);
+      const response = await fetchWithAuth(`${config.backendUrl}/api/v1/users/${userId}`);
       setUser(response.user);
     } catch (err) {
       setError(err.message);
@@ -29,7 +30,7 @@ function EditUser() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await fetchWithAuth(`https://localhost:7059/api/v1/users/${userId}`, {
+      await fetchWithAuth(`${config.backendUrl}/api/v1/users/${userId}`, {
         method: "PUT",
         body: JSON.stringify(user),
       });

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../style/EditDiscountStyles.css";
+import config from "../config";;
 
 function EditDiscount() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ function EditDiscount() {
 
   const fetchDiscount = async () => {
     try {
-      const response = await fetchWithAuth(`https://localhost:7059/api/v1/discounts/${id}`);
+      const response = await fetchWithAuth(`${config.backendUrl}/api/v1/discounts/${id}`);
       setDiscount(response);
     } catch (err) {
       setError(err.message);
@@ -35,7 +36,7 @@ function EditDiscount() {
     e.preventDefault();
 
     try {
-      await fetchWithAuth(`https://localhost:7059/api/v1/discounts/${id}`, {
+      await fetchWithAuth(`${config.backendUrl}/api/v1/discounts/${id}`, {
         method: "PUT",
         body: JSON.stringify(discount),
       });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../style/ProductStyles.css";
 import { useNavigate } from "react-router-dom";
+import config from "../config";;
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -34,11 +35,11 @@ function Products() {
   const fetchFilters = async () => {
     try {
       const responses = await Promise.all([
-        fetch("https://localhost:7059/api/v1/brands"),
-        fetch("https://localhost:7059/api/v1/categories"),
-        fetch("https://localhost:7059/api/v1/colors"),
-        fetch("https://localhost:7059/api/v1/sizes"),
-        fetch("https://localhost:7059/api/v1/genders"),
+        fetch(`${config.backendUrl}/api/v1/brands`),
+        fetch(`${config.backendUrl}/api/v1/categories`),
+        fetch(`${config.backendUrl}/api/v1/colors`),
+        fetch(`${config.backendUrl}/api/v1/sizes`),
+        fetch(`${config.backendUrl}/api/v1/genders`),
       ]);
 
       const [brandsData, categoriesData, colorsData, sizesData, gendersData] =
@@ -58,7 +59,7 @@ function Products() {
   const fetchAllProducts = async () => {
     try {
       setLoading(true);
-      const response = await fetch("https://localhost:7059/api/v1/products", {
+      const response = await fetch(`${config.backendUrl}/api/v1/products`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +85,7 @@ function Products() {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://localhost:7059/api/v1/products/search?${searchQuery}`,
+        `${config.backendUrl}/api/v1/products/search?${searchQuery}`,
         {
           method: "GET",
           headers: {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../style/UsersStyles.css";
+import config from "../config";;
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -14,7 +15,7 @@ function Users() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetchWithAuth("https://localhost:7059/api/v1/users");
+      const response = await fetchWithAuth(`${config.backendUrl}/api/v1/users`);
       setUsers(response.users);
     } catch (err) {
       setError(err.message);
@@ -25,7 +26,7 @@ function Users() {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await fetchWithAuth(`https://localhost:7059/api/v1/users/${userId}`, {
+      await fetchWithAuth(`${config.backendUrl}/api/v1/users/${userId}`, {
         method: "DELETE",
       });
       alert("User deleted successfully.");

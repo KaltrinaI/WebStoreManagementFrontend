@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../style/ProductDetailsStyles.css";
+import config from "../config";;
 
 function ProductDetails() {
   const { id } = useParams();
@@ -16,7 +17,7 @@ function ProductDetails() {
   const fetchProductDetails = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`https://localhost:7059/api/v1/products/${id}`, {
+      const response = await fetch(`${config.backendUrl}/api/v1/products/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +43,7 @@ function ProductDetails() {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      const response = await fetch(`https://localhost:7059/api/v1/products/${id}`, {
+      const response = await fetch(`${config.backendUrl}/api/v1/products/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

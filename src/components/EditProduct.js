@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../style/FormStyles.css";
+import config from "../config";;
 
 function EditProduct() {
   const { id } = useParams();
@@ -30,7 +31,7 @@ function EditProduct() {
   // Fetch product details
   const fetchProduct = async () => {
     try {
-      const data = await fetchWithAuth(`https://localhost:7059/api/v1/products/${id}`);
+      const data = await fetchWithAuth(`${config.backendUrl}/api/v1/products/${id}`);
       setProduct(data);
       setLoading(false);
     } catch (err) {
@@ -59,7 +60,7 @@ function EditProduct() {
     }
 
     try {
-      await fetchWithAuth(`https://localhost:7059/api/v1/products/${id}`, {
+      await fetchWithAuth(`${config.backendUrl}/api/v1/products/${id}`, {
         method: "PUT",
         body: JSON.stringify(product),
       });

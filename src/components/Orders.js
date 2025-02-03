@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/OrdersStyles.css";
+import config from "../config";;
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -35,7 +36,7 @@ function Orders() {
     setLoading(true);
 
     try {
-      const response = await fetch(`https://localhost:7059/api/v1/orders`, {
+      const response = await fetch(`${config.backendUrl}/api/v1/orders`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ function Orders() {
 
     try {
       const response = await fetch(
-        `https://localhost:7059/api/v1/orders/${orderId}/cancel`,
+        `${config.backendUrl}/api/v1/orders/${orderId}/cancel`,
         {
           method: "PUT",
           headers: {
@@ -96,7 +97,7 @@ function Orders() {
       setUpdating(orderId);
 
       const response = await fetch(
-        `https://localhost:7059/api/v1/orders/${orderId}/status`,
+        `${config.backendUrl}/api/v1/orders/${orderId}/status`,
         {
           method: "PUT",
           headers: {

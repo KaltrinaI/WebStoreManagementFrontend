@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style/Reports.css";
+import config from "../config";;
 
 function Reports() {
   const [reports, setReports] = useState([]);
@@ -19,7 +20,7 @@ function Reports() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const response = await fetch("https://localhost:7059/api/v1/reports", {
+      const response = await fetch(`${config.backendUrl}/api/v1/reports`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +45,7 @@ function Reports() {
   const handleGenerateDailyReport = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://localhost:7059/api/v1/reports/earnings/daily", {
+      const response = await fetch(`${config.backendUrl}/api/v1/reports/earnings/daily`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +70,7 @@ function Reports() {
     
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://localhost:7059/api/v1/reports/earnings/monthly", {
+      const response = await fetch(`${config.backendUrl}/api/v1/reports/earnings/monthly`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style/Shop.css";
+import config from "../config";;
 
 function Shop() {
   const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ function Shop() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("https://localhost:7059/api/v1/products", {
+      const response = await fetch(`${config.backendUrl}/api/v1/products`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +66,7 @@ function Shop() {
     };
 
     try {
-      const response = await fetch("https://localhost:7059/api/v1/orders", {
+      const response = await fetch(`${config.backendUrl}/api/v1/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

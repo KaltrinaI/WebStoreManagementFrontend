@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../style/AuthFormStyles.css";
 import logo from "../images/design.png";
 import { jwtDecode } from "jwt-decode";
+import config from "../config";;
 
 function SignIn({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ function SignIn({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://localhost:7059/api/v1/auth/login", {
+      const response = await fetch(`${config.backendUrl}/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

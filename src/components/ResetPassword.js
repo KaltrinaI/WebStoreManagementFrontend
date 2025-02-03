@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/AuthFormStyles.css";
 import logo from "../images/design.png";
+import config from "../config";;
 
 function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ function ResetPassword() {
     }
 
     try {
-      const response = await fetch("https://localhost:7059/api/v1/users/reset-password", {
+      const response = await fetch(`${config.backendUrl}/api/v1/users/reset-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style/CatalogsStyles.css";
+import config from "../config";;
 
 function Catalogs() {
   const [brands, setBrands] = useState([]);
@@ -23,7 +24,7 @@ function Catalogs() {
 
     setLoading(true);
     try {
-      const response = await fetch(`https://localhost:7059/api/v1/${endpoint}`, {
+      const response = await fetch(`${config.backendUrl}/api/v1/${endpoint}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +71,7 @@ function Catalogs() {
     if (type === "sizes") bodyContent = { label: newEntry[type] };
 
     try {
-      const response = await fetch(`https://localhost:7059/api/v1/${endpoint}`, {
+      const response = await fetch(`${config.backendUrl}/api/v1/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +111,7 @@ function Catalogs() {
 
     try {
       const response = await fetch(
-        `https://localhost:7059/api/v1/${endpoint}/${id}`,
+        `${config.backendUrl}/api/v1/${endpoint}/${id}`,
         {
           method: "PUT",
           headers: {
@@ -138,7 +139,7 @@ function Catalogs() {
 
     try {
       const response = await fetch(
-        `https://localhost:7059/api/v1/${endpoint}/${id}`,
+        `${config.backendUrl}/api/v1/${endpoint}/${id}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },

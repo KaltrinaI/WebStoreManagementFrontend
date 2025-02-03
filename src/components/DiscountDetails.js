@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../style/DiscountDetailsStyles.css";
+import config from "../config";;
 
 function DiscountDetails() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ function DiscountDetails() {
 
   const fetchDiscount = async () => {
     try {
-      const response = await fetchWithAuth(`https://localhost:7059/api/v1/discounts/${id}`);
+      const response = await fetchWithAuth(`${config.backendUrl}/api/v1/discounts/${id}`);
       setDiscount(response);
     } catch (err) {
       setError(err.message);
@@ -26,7 +27,7 @@ function DiscountDetails() {
     if (!window.confirm("Are you sure you want to delete this discount?")) return;
 
     try {
-      await fetchWithAuth(`https://localhost:7059/api/v1/discounts/${id}`, {
+      await fetchWithAuth(`${config.backendUrl}/api/v1/discounts/${id}`, {
         method: "DELETE",
       });
       alert("Discount deleted successfully.");

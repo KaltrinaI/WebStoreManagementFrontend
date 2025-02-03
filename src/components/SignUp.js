@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../style/AuthFormStyles.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../images/design.png";
+import config from "../config";;
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -37,7 +38,7 @@ function SignUp() {
 
     try {
       const response = await fetch(
-        "https://localhost:7059/api/v1/auth/register",
+        `${config.backendUrl}/api/v1/auth/register`,
         {
           method: "POST",
           headers: {

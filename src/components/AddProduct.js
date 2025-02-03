@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithAuth } from "./fetchWithAuth";
 import "../style/FormStyles.css";
+import config from "./config";
+
 
 function AddProduct() {
   const [name, setName] = useState("");
@@ -48,7 +50,7 @@ function AddProduct() {
     };
 
     try {
-      const response = await fetchWithAuth("https://localhost:7059/api/v1/products", {
+      const response = await fetchWithAuth(`${config.backendUrl}/api/v1/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
