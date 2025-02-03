@@ -74,12 +74,12 @@ function SignIn({ onLogin }) {
       {error && <p className="auth-error">{error}</p>}
       <p>
         Don't have an account?{" "}
-        <a href="/register" className="auth-link">
+        <a href="/register" >
           Register here
         </a>
       </p>
       <p>
-  <a href="/reset-password" className="auth-link">Forgot Password?</a>
+  <a href="/reset-password" >Forgot Password?</a>
 </p>
 
     </div>

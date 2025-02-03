@@ -1,3 +1,4 @@
+/* Discounts Container */
 .discounts-container {
   max-width: 1100px;
   margin: 50px auto;
@@ -22,6 +23,7 @@
   text-transform: uppercase;
 }
 
+/* Discounts Table */
 .discounts-table {
   width: 100%;
   border-collapse: collapse;
@@ -34,33 +36,36 @@
 
 .discounts-table th,
 .discounts-table td {
-  padding: 12px;
+  padding: 14px;
   text-align: center;
   font-size: 16px;
   border-bottom: 1px solid #ddd;
 }
 
 .discounts-table th {
-  background-color: #1976d2;
+  background-color: #1565c0;
   color: #ffffff;
   font-weight: bold;
   text-transform: uppercase;
 }
 
-.discounts-table tbody tr:hover {
+.discounts-table tr:nth-child(even) {
   background-color: #f1f8ff;
-  transition: background-color 0.3s;
 }
 
-.discounts-loading,
-.discounts-error,
-.discounts-empty {
-  text-align: center;
-  margin-top: 25px;
-  font-size: 18px;
-  font-weight: bold;
+.discounts-table tr:hover {
+  background-color: #e0f2fe;
+  transition: background-color 0.3s ease-in-out;
 }
 
+/* Buttons */
+.discounts-table td .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* View Button */
 .btn-view {
   padding: 10px 16px;
   font-size: 14px;
@@ -76,4 +81,80 @@
 .btn-view:hover {
   background-color: #1b5e20;
   transform: scale(1.05);
+}
+
+/* Edit Button */
+.btn-edit {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Delete Button */
+.btn-delete {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: #b71c1c;
+  transform: scale(1.05);
+}
+
+/* Loading, Error, Empty States */
+.discounts-loading,
+.discounts-error,
+.discounts-empty {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #37474f;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .discounts-container {
+    padding: 20px;
+  }
+
+  .discounts-title {
+    font-size: 22px;
+  }
+
+  .discounts-table th,
+  .discounts-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-view,
+  .btn-edit,
+  .btn-delete {
+    width: 100%;
+    text-align: center;
+  }
 }

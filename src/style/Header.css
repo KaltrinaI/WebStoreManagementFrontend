@@ -1,7 +1,7 @@
 .admin-header {
   background-color: #1565c0;
   color: white;
-  padding: 25px 40px;
+  padding: 20px 40px;
   text-align: center;
   display: flex;
   justify-content: space-between;
@@ -38,4 +38,55 @@
 .logout-button:hover {
   background-color: #e3f2fd;
   transform: scale(1.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3db9af;
+  padding: 15px 20px;
+  color: white;
+}
+
+.logo {
+  height: 50px;
+}
+
+.auth-link {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+  max-width: 1400px; /* Adjust width dynamically */
+  margin: auto;
+}
+
+.filters-section {
+  flex: 1; /* Adjust to take more space */
+  max-width: 40%;
+  background: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.products-section {
+  flex: 2; /* Adjust to take more space */
+  max-width: 60%;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Increase size of product boxes */
+  gap: 20px;
 }

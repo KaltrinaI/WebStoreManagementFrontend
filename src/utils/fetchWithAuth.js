@@ -22,6 +22,9 @@ export async function fetchWithAuth(url, options = {}) {
     );
   }
 
-  // Parse and return JSON response
+    if (response.status === 204) {
+      return null;
+    }
+  
   return response.json();
 }

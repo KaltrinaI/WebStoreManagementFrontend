@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../style/ProductStyles.css";
+import "../style/AuthFormStyles.css";
+import "../style/HeaderStyles.css";
+import logo from "../images/design.png";
 import { useNavigate } from "react-router-dom";
 import config from "../config";;
 
@@ -12,8 +15,10 @@ function Products() {
   const [genders, setGenders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Internal query string based on filter selections.
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Combined filter state (including priceMin and priceMax)
   const [filters, setFilters] = useState({
     category: "",
     gender: "",
@@ -21,17 +26,29 @@ function Products() {
     size: "",
     color: "",
     inStock: "",
-    priceMin: "",
-    priceMax: "",
+    minPrice: "",
+    maxPrice: "",
+  });
+
+  // For collapsing/expanding filter sections
+  const [expandedSections, setExpandedSections] = useState({
+    Brands: true,
+    Categories: true,
+    Colors: true,
+    Sizes: true,
+    Genders: true,
+    PriceRange: true,
   });
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchFilters();
-    fetchAllProducts();
+    // Initially fetch all products (an empty query string returns all)
+    fetchAllProducts("");
   }, []);
 
+  // Fetch filter options from the API
   const fetchFilters = async () => {
     try {
       const responses = await Promise.all([
@@ -43,7 +60,9 @@ function Products() {
       ]);
 
       const [brandsData, categoriesData, colorsData, sizesData, gendersData] =
-        await Promise.all(responses.map((res) => (res.ok ? res.json() : [])));
+        await Promise.all(
+          responses.map((res) => (res.ok ? res.json() : []))
+        );
 
       setBrands(Array.isArray(brandsData) ? brandsData : []);
       setCategories(Array.isArray(categoriesData) ? categoriesData : []);
@@ -56,50 +75,23 @@ function Products() {
     }
   };
 
-  const fetchAllProducts = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${config.backendUrl}/api/v1/products`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch products.");
-      }
-
-      const data = await response.json();
-      setProducts(Array.isArray(data) ? data : []);
-    } catch (err) {
-      setError(err.message);
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  
+  const fetchAllProducts = async (queryParams = "") => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${config.backendUrl}/api/v1/products/search?${searchQuery}`,
+        `${config.backendUrl}/api/v1/products/search?${queryParams}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
-      if (!response.ok) {
-        throw new Error("No products found.");
-      }
+      if (!response.ok) throw new Error("No products found.");
 
       const data = await response.json();
       setProducts(Array.isArray(data) ? data : []);
+      setError(undefined)
     } catch (err) {
       setError(err.message);
       setProducts([]);
@@ -108,98 +100,202 @@ function Products() {
     }
   };
 
-  const handleFilterClick = (type, value) => {
-    var newFilter = {
-      ...filters,
-      [type]: filters[type] === value ? "" : value,
-    }
-    setFilters(newFilter);
-
-    function generateSearchQuery(fltr){
-      return Object.entries(fltr)
-      .filter(([_, value]) => value !== undefined && value !== null && value !== '') // Skip unassigned values
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+  // Build a query string from the filters object.
+  const generateSearchQuery = (fltr) => {
+    return Object.entries(fltr)
+      .filter(([_, value]) => value !== undefined && value !== null && value !== '')
+      .map(
+        ([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+      )
       .join('&');
-    }
-
-
-    setSearchQuery(generateSearchQuery(newFilter))
   };
 
+  // Called when a filter option is selected. It toggles the filter value,
+  // updates the filters state, and regenerates the internal search query.
+  // (Note: For radio buttons, clicking an already selected option won't clear it,
+  // so you can rely on the Reset Filters button to clear all selections.)
+  const handleFilterClick = (type, value) => {
+    const newFilter = {
+      ...filters,
+      [type]: value,
+    };
+    setFilters(newFilter);
+    setSearchQuery(generateSearchQuery(newFilter));
+  };
+
+  // Reset all filters and the internal search query.
   const handleResetFilters = () => {
-    setFilters({
+    const resetFilters = {
       category: "",
       gender: "",
       brand: "",
       size: "",
       color: "",
       inStock: "",
-      priceMin: "",
-      priceMax: "",
-    });
+      minPrice: "",
+      maxPrice: "",
+    };
+    setFilters(resetFilters);
     setSearchQuery("");
   };
 
-  if (loading) return <div className="products-loading">Loading...</div>;
-  if (error) return <div className="products-error">Error: {error}</div>;
+  // Trigger a search using the current internal query string.
+  const handleSearch = async (e) =>  {
+    e.preventDefault();
+    await fetchAllProducts(searchQuery);
+  };
+
+  // Map UI labels to the filter keys in our state.
+  const filterKeyMapping = {
+    Brands: "brand",
+    Categories: "category",
+    Colors: "color",
+    Sizes: "size",
+    Genders: "gender",
+  };
 
   return (
     <div className="products-container">
-      <h1 className="products-title">Product List</h1>
-
-      <form onSubmit={handleSearch} className="search-form">
-        <input
-          type="text"
-          placeholder="Search for a product..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-input"
-        />
-        <button type="submit" className="search-button">Search</button>
-      </form>
-
-      <div className="filters-container">
-        {renderFilterSection("Categories", categories, "category")}
-        {renderFilterSection("Brands", brands, "brand")}
-        {renderFilterSection("Genders", genders, "gender")}
-        {renderFilterSection("Colors", colors, "color")}
-        {renderFilterSection("Sizes", sizes, "size")}
-        <button className="reset-button" onClick={handleResetFilters}>Reset Filters</button>
+      <div className="header">
+        <img src={logo} alt="Logo" className="auth-logo" width="25" />
+        <button
+          type="button"
+          className="btn-login"
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </button>
       </div>
+      <div className="content">
+        <div className="filters-section">
+          {/* Filter groups rendered as radio button groups */}
+          <form onSubmit={handleSearch} className="search-form">
+            <button type="submit" className="search-button">
+              Search
+            </button>
+          </form>
+          {[
+            ["Brands", brands],
+            ["Categories", categories],
+            ["Colors", colors],
+            ["Sizes", sizes],
+            ["Genders", genders],
+          ].map(([label, items]) => (
+            <div key={label} className="filter-group">
+              <h3
+                onClick={() =>
+                  setExpandedSections((prev) => ({
+                    ...prev,
+                    [label]: !prev[label],
+                  }))
+                }
+                className="filter-header"
+              >
+                {label} <span>{expandedSections[label] ? "▲" : "▼"}</span>
+              </h3>
+              {expandedSections[label] && (
+                <div className="filter-options">
+                  {items.map((item) => (
+                    <label key={item} className="filter-option">
+                      <input
+                        type="radio"
+                        name={label}
+                        value={item}
+                        checked={filters[filterKeyMapping[label]] === item}
+                        onChange={() =>
+                          handleFilterClick(filterKeyMapping[label], item)
+                        }
+                      />
+                      {item}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
 
-      {renderProductTable()}
+          {/* Price Range Filter */}
+          <div className="filter-group">
+            <h3
+              onClick={() =>
+                setExpandedSections((prev) => ({
+                  ...prev,
+                  PriceRange: !prev.PriceRange,
+                }))
+              }
+              className="filter-header"
+            >
+              Price Range <span>{expandedSections.PriceRange ? "▲" : "▼"}</span>
+            </h3>
+            {expandedSections.PriceRange && (
+              <div className="filter-options">
+                <label>Min Price: </label>
+                <input
+                  type="number"
+                  value={filters.minPrice}
+                  onChange={(e) => {
+                    const newFilters = {
+                      ...filters,
+                      minPrice
+                      : e.target.value,
+                    };
+                    setFilters(newFilters);
+                    setSearchQuery(generateSearchQuery(newFilters));
+                  }}
+                />
+                <label>Max Price: </label>
+                <input
+                  type="number"
+                  value={filters.maxPrice}
+                  onChange={(e) => {
+                    const newFilters = {
+                      ...filters,
+                      maxPrice: e.target.value,
+                    };
+                    setFilters(newFilters);
+                    setSearchQuery(generateSearchQuery(newFilters));
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          <button className="reset-button" onClick={handleResetFilters}>
+            Reset Filters
+          </button>
+
+          {/* Trigger search based on the internal searchQuery built from the filters */}
+          
+        </div>
+
+        <div className="product-grid">
+          {loading ? (
+            <div className="products-loading">Loading...</div>
+          ) : error ? (
+            <div className="products-error">Error: {error}</div>
+          ) : (
+            products.map((product) => (
+              <div key={product.id} className="product-card">
+                <div className="product-image-container">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="product-image"
+                  />
+                </div>
+                <div className="product-info">
+                  <p className="product-name">{product.name}</p>
+                  <p className="product-price">
+                    ${product.price.toFixed(2)}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
-
-  function renderFilterSection(title, items, type) {
-    if (!Array.isArray(items)) return <p>Loading {title}...</p>;
-    return (
-      <div className="filter-group">
-        <h3>{title}</h3>
-        {items.length > 0 ? (
-          items.map((item, index) => (
-            <button key={index} className="filter-btn" onClick={() => handleFilterClick(type, item)}>
-              {item}
-            </button>
-          ))
-        ) : (
-          <p>No {title.toLowerCase()} available.</p>
-        )}
-      </div>
-    );
-  }
-
-  function renderProductTable() {
-    return products.length > 0 ? (
-      <div className="product-list">
-        {products.map((product) => (
-          <div key={product.id}>{product.name}</div>
-        ))}
-      </div>
-    ) : (
-      <p>No products available.</p>
-    );
-  }
 }
 
 export default Products;

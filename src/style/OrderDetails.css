@@ -1,0 +1,43 @@
+.order-details-container {
+    max-width: 900px; /* Increased width */
+    margin: auto;
+    padding: 30px; /* Increased padding */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Make headings larger */
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 28px; /* Increased font size */
+}
+
+h3 {
+    margin-top: 25px;
+    color: #444;
+    font-size: 22px; /* Increased font size */
+}
+
+/* Make paragraphs larger */
+p {
+    font-size: 18px; /* Increased font size */
+    color: #555;
+    margin: 8px 0; /* Increased spacing */
+}
+
+/* Make order items larger */
+.order-item {
+    padding: 15px; /* Increased padding */
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    margin-top: 15px; /* Increased spacing */
+    border-radius: 8px; /* Slightly rounded corners */
+}
+
+/* Increase text size inside order items */
+.order-item p {
+    margin: 5px 0;
+    font-size: 16px; /* Increased font size */
+}

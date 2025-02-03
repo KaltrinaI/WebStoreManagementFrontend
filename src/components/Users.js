@@ -39,6 +39,11 @@ function Users() {
   return (
     <div className="users-container">
       <h1>User Management</h1>
+      <button
+            type="button"
+            className="btn-back"
+            onClick={() => navigate("/welcome")}
+          >Go Back</button>
       {error && <p className="error">{error}</p>}
       <table className="users-table">
         <thead>
@@ -61,9 +66,6 @@ function Users() {
                 <button onClick={() => navigate(`/users/edit/${user.id}`)}>Edit</button>
                 <button className="delete-btn" onClick={() => handleDeleteUser(user.id)}>
                   Delete
-                </button>
-                <button onClick={() => navigate(`/users/reset-password/${user.id}`)}>
-                  Reset Password
                 </button>
               </td>
             </tr>

@@ -16,6 +16,11 @@ function Discounts() {
   const fetchDiscounts = async () => {
     try {
       const response = await fetchWithAuth(`${config.backendUrl}/api/v1/discounts`);
+
+      if (!Array.isArray(response)) {
+        throw new Error("Invalid response format");
+      }
+
       setDiscounts(response);
     } catch (err) {
       setError(err.message);
@@ -28,7 +33,11 @@ function Discounts() {
     try {
       await fetchWithAuth(`${config.backendUrl}/api/v1/discounts/${discountId}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
       });
+
       alert("Discount deleted successfully.");
       fetchDiscounts();
     } catch (err) {
@@ -38,36 +47,51 @@ function Discounts() {
 
   return (
     <div className="discounts-container">
-      <h1>Discounts Management</h1>
+      <h1 className="discounts-title">Discounts Management</h1>
+      <button className="btn-save" onClick={() => navigate("/add-discount")}>
+  Add Discount
+</button>
+
+<button
+            type="button"
+            className="btn-back"
+            onClick={() => navigate("/welcome")}
+          >Go Back</button>
+
+
       {error && <p className="error">{error}</p>}
-      <table className="discounts-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Percentage</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {discounts.map((discount) => (
-            <tr key={discount.id}>
-              <td>{discount.name}</td>
-              <td>{discount.disountPercentage}%</td>
-              <td>{new Date(discount.startDate).toLocaleDateString()}</td>
-              <td>{new Date(discount.endDate).toLocaleDateString()}</td>
-              <td>
-                <button onClick={() => navigate(`/discounts/${discount.id}`)}>View</button>
-                <button onClick={() => navigate(`/discounts/edit/${discount.id}`)}>Edit</button>
-                <button className="delete-btn" onClick={() => handleDeleteDiscount(discount.id)}>
-                  Delete
-                </button>
-              </td>
+
+      {discounts.length === 0 ? (
+        <p className="discounts-empty">No discounts available.</p>
+      ) : (
+        <table className="discounts-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Percentage</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {discounts.map((discount) => (
+              <tr key={discount.id}>
+                <td>{discount.name}</td>
+                <td>{discount.discountPercentage}%</td> 
+                <td>{new Date(discount.startDate).toLocaleDateString()}</td>
+                <td>{new Date(discount.endDate).toLocaleDateString()}</td>
+                <td>
+                  <div className="btn-group">
+                    <button className="btn-edit" onClick={() => navigate(`/discounts/edit/${discount.id}`)}>Edit</button>
+                    <button className="btn-delete" onClick={() => handleDeleteDiscount(discount.id)}>Delete</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
