@@ -4,7 +4,7 @@ import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../style/UserFormStyles.css";
 
 function EditUser() {
-  const { userId } = useParams();
+  const { id } = useParams();
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -12,6 +12,8 @@ function EditUser() {
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
 
   useEffect(() => {
     fetchUserDetails();
@@ -19,7 +21,7 @@ function EditUser() {
 
   const fetchUserDetails = async () => {
     try {
-      const response = await fetchWithAuth(`https://localhost:7059/api/v1/users/${userId}`);
+      const response = await fetchWithAuth(`https://localhost:7059/api/v1/users/${id}`);
       setUser(response.user);
     } catch (err) {
       setError(err.message);
@@ -29,12 +31,17 @@ function EditUser() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await fetchWithAuth(`https://localhost:7059/api/v1/users/${userId}`, {
+      await fetchWithAuth(`https://localhost:7059/api/v1/users/${id}`, {
         method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+
+        },
         body: JSON.stringify(user),
       });
       alert("User updated successfully!");
-      navigate("/users");
+      navigate("/view-users");
     } catch (err) {
       setError(err.message);
     }
@@ -44,19 +51,34 @@ function EditUser() {
     <div className="user-form-container">
       <h1>Edit User</h1>
       {error && <p className="error">{error}</p>}
+
       <form onSubmit={handleUpdate}>
         <label>First Name:</label>
-        <input type="text" value={user.firstName} onChange={(e) => setUser({ ...user, firstName: e.target.value })} required />
+        <input 
+          type="text" 
+          value={user.firstName} 
+          onChange={(e) => setUser({ ...user, firstName: e.target.value })} 
+          required 
+        />
 
         <label>Last Name:</label>
-        <input type="text" value={user.lastName} onChange={(e) => setUser({ ...user, lastName: e.target.value })} required />
+        <input 
+          type="text" 
+          value={user.lastName} 
+          onChange={(e) => setUser({ ...user, lastName: e.target.value })} 
+          required 
+        />
 
         <label>Phone Number:</label>
-        <input type="text" value={user.phoneNumber} onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })} />
+        <input 
+          type="text" 
+          value={user.phoneNumber} 
+          onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })} 
+        />
 
-        <button type="submit">Update</button>
+        <button type="submit" className="btn-update">Update</button>
       </form>
-      <button onClick={() => navigate(-1)}>Cancel</button>
+      <button className="btn-cancel" onClick={() => navigate(-1)}>Cancel</button>
     </div>
   );
 }

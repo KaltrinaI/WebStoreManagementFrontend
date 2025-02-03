@@ -96,7 +96,7 @@ function Orders() {
       setUpdating(orderId);
 
       const response = await fetch(
-        `https://localhost:7059/api/v1/orders/${orderId}/status`,
+        `https://localhost:7059/api/v1/orders/${orderId}/status/${newStatus}`,
         {
           method: "PUT",
           headers: {
@@ -121,14 +121,18 @@ function Orders() {
     }
   };
 
-  const handleViewOrderDetails = (orderId) => {
-    navigate(`/orders/view/${orderId}`);
+  const handleViewOrderDetails = (id) => {
+    navigate(`/orders/view/${id}`);
   };
 
   return (
     <div className="orders-container">
       <h1 className="orders-title">Orders List</h1>
-
+      <button
+            type="button"
+            className="btn-back"
+            onClick={() => navigate("/welcome")}
+          >Go Back</button>
       {loading && <div className="orders-loading">Loading...</div>}
       {error && <div className="orders-error">Error: {error}</div>}
 

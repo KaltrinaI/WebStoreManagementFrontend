@@ -15,10 +15,13 @@ import Reports from "./components/Reports";
 import Users from "./components/Users";
 import ResetPassword from "./components/ResetPassword";
 import Discounts from "./components/Discounts";
-import DiscountDetails from "./components/DiscountDetails"
 import EditDiscount from "./components/EditDiscount";
 import EditUser from "./components/EditUser";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OrderDetails from "./components/OrderDetails"; 
+import AddDiscount from "./components/AddDiscount";
+import ManageProducts from "./components/ManageProducts";
+import AddProduct from "./components/AddProduct";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -78,34 +81,30 @@ function AppContent({ isAuthenticated, setIsAuthenticated, role, setRole }) {
         )}
  <div className="content">
   <Routes>
-    <Route path="/" element={<Welcome />} />
     <Route path="/login" element={<SignIn onLogin={handleLogin} />} />
     <Route path="/register" element={<SignUp />} />
     <Route path="/reset-password" element={<ResetPassword />} />
-    <Route path="/welcome" element={<Welcome />} />
-    <Route path="/shop" element={<Shop />} />
+    <Route path="/view-products" element={<Products />} />
+    <Route path="/" element={<Products />} />
     
     {/* Products */}
     <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
-    <Route path="/view-products" element={<Products />} />
     <Route path="/products/view/:id" element={<ProductDetails />} />
     <Route path="/products/edit/:id" element={<EditProduct />} />
-    </Route>
-
-    {/* Orders */}
+    <Route path="/manage-products" element={<ManageProducts />} />
+    <Route path="/add-product" element={<AddProduct />} />
+    <Route path="/add-discount" element={<AddDiscount />} />
+    <Route path="/welcome" element={<Welcome />} />
     <Route path="/view-orders" element={<Orders />} />
-
-    {/* Discounts */}
     <Route path="/view-discounts" element={<Discounts />} />
-    <Route path="/discounts/view/:id" element={<DiscountDetails />} />
     <Route path="/discounts/edit/:id" element={<EditDiscount />} />
-
-    {/* Reports */}
     <Route path="/view-reports" element={<Reports />} />
-
-    {/* Users */}
     <Route path="/view-users" element={<Users />} />
     <Route path="/users/edit/:id" element={<EditUser />} />
+    <Route path="/shop" element={<Shop />} />
+    <Route path="/orders/view/:id" element={<OrderDetails />} />
+    
+    </Route>
   </Routes>
 </div>
 

@@ -8,6 +8,7 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchProductDetails();
@@ -38,30 +39,6 @@ function ProductDetails() {
     }
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
-
-    try {
-      const response = await fetch(`https://localhost:7059/api/v1/products/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        alert("Product deleted successfully");
-        navigate("/view-products");
-      } else {
-        const errorData = await response.json();
-        alert(`Failed to delete product: ${errorData.message}`);
-      }
-    } catch (err) {
-      console.error("Delete error:", err);
-      alert("An error occurred while deleting the product.");
-    }
-  };
-
   if (loading) return <div className="product-details-loading">Loading...</div>;
   if (error) return <div className="product-details-error">Error: {error}</div>;
 
@@ -73,22 +50,12 @@ function ProductDetails() {
           <p><strong>Name:</strong> {product.name}</p>
           <p><strong>Description:</strong> {product.description}</p>
           <p><strong>Price:</strong> ${product.price.toFixed(2)}</p>
-          <p><strong>Discounted Price:</strong> ${product.discountedPrice.toFixed(2)}</p>
           <p><strong>Quantity:</strong> {product.quantity}</p>
           <p><strong>Gender:</strong> {product.genderName}</p>
           <p><strong>Brand:</strong> {product.brandName}</p>
           <p><strong>Category:</strong> {product.categoryName}</p>
           <p><strong>Color:</strong> {product.colorName}</p>
           <p><strong>Size:</strong> {product.sizeName}</p>
-          
-          <div className="product-details-actions">
-            <button onClick={() => navigate(`/products/edit/${id}`)} className="btn-edit">
-              Edit
-            </button>
-            <button onClick={handleDelete} className="btn-delete">
-              Delete
-            </button>
-          </div>
         </div>
       )}
       <button onClick={() => navigate(-1)} className="btn-back">

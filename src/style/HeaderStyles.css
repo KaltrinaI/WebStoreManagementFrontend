@@ -1,0 +1,136 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 15px 20px;
+    color: white;
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  .auth-link {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .auth-link:hover {
+    text-decoration: underline;
+  }
+  
+  
+  .filter-group {
+    margin-bottom: 15px;
+  }
+  
+  .filter-option {
+    display: block;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .filter-option.selected {
+    background-color: #0056b3;
+    color: white;
+  }
+  
+
+  .filter-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .filter-options {
+    padding-left: 10px;
+  }
+  
+  
+  .content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%;
+    max-width: 1400px; /* Adjust width dynamically */
+    margin: auto;
+  }
+  
+  .filters-section {
+    flex: 1; /* Adjust to take more space */
+    max-width: 40%;
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .products-section {
+    flex: 2; /* Adjust to take more space */
+    max-width: 60%;
+  }
+
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ensures three products per row */
+    gap: 20px; /* Space between products */
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .product-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 2px solid #ddd;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .product-image-container {
+    width: 100%;
+    height: 280px; /* Ensures uniform image size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .product-info {
+    margin-top: 15px;
+  }
+  
+  .product-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+  }
+  
+  .product-price {
+    font-size: 16px;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  
+  

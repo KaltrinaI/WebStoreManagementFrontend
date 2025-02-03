@@ -1,0 +1,170 @@
+/* EditProductStyles.css */
+
+/* Container for the Edit Product page */
+.edit-product-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #e3f2fd;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  }
+  
+  .edit-product-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Title styling */
+  .edit-product-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #1565c0;
+    text-transform: uppercase;
+  }
+  
+  /* Form styling */
+  .edit-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Form group styling */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label styling */
+  .form-label {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #37474f;
+  }
+  
+  /* Input field styling */
+  .edit-product-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #90caf9;
+    background-color: #ffffff;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+  
+  .edit-product-input:focus {
+    border-color: #1565c0;
+    background-color: #f0f9ff;
+    outline: none;
+  }
+  
+  /* Textarea styling */
+  .edit-product-textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #90caf9;
+    background-color: #ffffff;
+    resize: vertical;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+  
+  .edit-product-textarea:focus {
+    border-color: #1565c0;
+    background-color: #f0f9ff;
+    outline: none;
+  }
+  
+  /* Actions container for buttons */
+  .edit-product-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Save (Update) Button styling */
+  .btn-save {
+    background-color: #2e7d32;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    width: 180px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .btn-save:hover {
+    background-color: #1b5e20;
+    transform: scale(1.05);
+  }
+  
+  /* Cancel Button styling */
+  .btn-cancel {
+    background-color: #d32f2f;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    width: 180px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .btn-cancel:hover {
+    background-color: #b71c1c;
+    transform: scale(1.05);
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: #d32f2f;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  /* Loading message styling */
+  .loading-message {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 50px;
+    color: #555;
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .edit-product-container {
+      padding: 20px;
+    }
+    
+    .edit-product-title {
+      font-size: 22px;
+    }
+    
+    .edit-product-form {
+      gap: 15px;
+    }
+    
+    .btn-save,
+    .btn-cancel {
+      width: 100%;
+      margin: 0;
+    }
+  }
+  

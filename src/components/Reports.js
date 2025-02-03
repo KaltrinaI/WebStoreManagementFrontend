@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../style/Reports.css";
+import { useNavigate } from "react-router-dom";
 
 function Reports() {
   const [reports, setReports] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  
 
   // State for monthly report form
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
@@ -45,7 +48,7 @@ function Reports() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch("https://localhost:7059/api/v1/reports/earnings/daily", {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -66,30 +69,30 @@ function Reports() {
   // Generate Monthly Report with Month & Year
   const handleGenerateMonthlyReport = async (e) => {
     e.preventDefault();
-    
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://localhost:7059/api/v1/reports/earnings/monthly", {
-        method: "POST",
+    
+      // Append query parameters correctly in the URL
+      const url = `https://localhost:7059/api/v1/reports/earnings/monthly?month=${selectedMonth}&year=${selectedYear}`;
+    
+      const response = await fetch(url, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          month: selectedMonth,
-          year: selectedYear,
-        }),
       });
-
+    
       if (!response.ok) {
         throw new Error("Failed to generate monthly report.");
       }
-
+    
       alert(`Monthly Report for ${selectedMonth}/${selectedYear} Generated Successfully!`);
       fetchReports();
     } catch (err) {
       setError(err.message);
     }
+    
   };
 
   return (
@@ -103,6 +106,7 @@ function Reports() {
         <button className="btn-generate" onClick={handleGenerateDailyReport}>
           Generate Daily Report
         </button>
+        <br></br>
 
         {/* Monthly Report Form */}
         <form className="monthly-report-form" onSubmit={handleGenerateMonthlyReport}>
@@ -130,14 +134,28 @@ function Reports() {
         </form>
       </div>
 
-      {loading ? <p>Loading...</p> : (
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
         <div className="report-list">
           {reports.length > 0 ? (
             reports.map((report, index) => (
               <div key={index} className="report-card">
-                <h3>{report.ReportName}</h3>
-                <p><strong>Date:</strong> {report.ReportDate}</p>
-                <pre className="report-data">{JSON.stringify(report.ReportData, null, 2)}</pre>
+                <h3>Report {index + 1}</h3>
+                <p><strong>Date:</strong> {report.reportDate}</p>
+                <p><strong>Total Earnings:</strong> ${report.totalEarnings.toFixed(2)}</p>
+
+                {/* Top Selling Product Details */}
+                {report.topSellingProduct && (
+                  <div className="top-product">
+                    <h4>Top Selling Product:</h4>
+                    <p><strong>Name:</strong> {report.topSellingProduct.name}</p>
+                    <p><strong>Category:</strong> {report.topSellingProduct.categoryName}</p>
+                    <p><strong>Brand:</strong> {report.topSellingProduct.brandName}</p>
+                    <p><strong>Price:</strong> ${report.topSellingProduct.price.toFixed(2)}</p>
+                    <p><strong>Discounted Price:</strong> {report.topSellingProduct.discountedPrice > 0 ? `$${report.topSellingProduct.discountedPrice.toFixed(2)}` : "No Discount"}</p>
+                  </div>
+                )}
               </div>
             ))
           ) : (
@@ -145,6 +163,11 @@ function Reports() {
           )}
         </div>
       )}
+            <button
+            type="button"
+            className="btn-back"
+            onClick={() => navigate("/welcome")}
+          >Go Back</button>
     </div>
   );
 }

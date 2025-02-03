@@ -7,13 +7,12 @@ function EditDiscount() {
   const { id } = useParams();
   const [discount, setDiscount] = useState({
     name: "",
-    disountPercentage: "",
+    discountPercentage: "",
     startDate: "",
     endDate: "",
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     fetchDiscount();
   }, []);
@@ -21,7 +20,12 @@ function EditDiscount() {
   const fetchDiscount = async () => {
     try {
       const response = await fetchWithAuth(`https://localhost:7059/api/v1/discounts/${id}`);
-      setDiscount(response);
+      setDiscount({
+        name: response.name,
+        discountPercentage: response.discountPercentage,
+        startDate: response.startDate ? response.startDate.split("T")[0] : "",
+        endDate: response.endDate ? response.endDate.split("T")[0] : "",
+      });
     } catch (err) {
       setError(err.message);
     }
@@ -40,7 +44,7 @@ function EditDiscount() {
         body: JSON.stringify(discount),
       });
       alert("Discount updated successfully.");
-      navigate("/discounts");
+      navigate("/view-discounts");
     } catch (err) {
       setError(err.message);
     }
@@ -48,24 +52,58 @@ function EditDiscount() {
 
   return (
     <div className="edit-discount-container">
-      <h1>Edit Discount</h1>
+      <h1 className="edit-discount-title">Edit Discount</h1>
       {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>Name:</label>
-        <input type="text" name="name" value={discount.name} onChange={handleChange} required />
+       
+        <form className="edit-discount-form" onSubmit={handleSubmit}>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            className="edit-discount-input"
+            value={discount.name}
+            onChange={handleChange}
+            required
+          />
 
-        <label>Discount Percentage:</label>
-        <input type="number" name="disountPercentage" value={discount.disountPercentage} onChange={handleChange} required />
+          <label>Discount Percentage:</label>
+          <input
+            type="number"
+            name="discountPercentage"
+            className="edit-discount-input"
+            value={discount.discountPercentage}
+            onChange={handleChange}
+            required
+          />
 
-        <label>Start Date:</label>
-        <input type="date" name="startDate" value={discount.startDate} onChange={handleChange} required />
+          <label>Start Date:</label>
+          <input
+            type="date"
+            name="startDate"
+            className="edit-discount-input"
+            value={discount.startDate}
+            onChange={handleChange}
+            required
+          />
 
-        <label>End Date:</label>
-        <input type="date" name="endDate" value={discount.endDate} onChange={handleChange} required />
+          <label>End Date:</label>
+          <input
+            type="date"
+            name="endDate"
+            className="edit-discount-input"
+            value={discount.endDate}
+            onChange={handleChange}
+            required
+          />
 
-        <button type="submit">Update Discount</button>
-        <button onClick={() => navigate("/discounts")}>Cancel</button>
-      </form>
+          <div className="edit-discount-actions">
+            <button type="submit" className="btn-save">Update Discount</button>
+            <button type="button" className="btn-cancel" onClick={() => navigate("/view-discounts")}>
+              Cancel
+            </button>
+          </div>
+        </form>
+    
     </div>
   );
 }

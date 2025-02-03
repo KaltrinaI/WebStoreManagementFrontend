@@ -1,82 +1,75 @@
-import React, { useState, useEffect } from "react";
-import { fetchWithAuth } from "./fetchWithAuth";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchWithAuth } from "../utils/fetchWithAuth";
 import "../style/FormStyles.css";
 
 function AddProduct() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [gender, setGender] = useState("");
-  const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
+  const navigate = useNavigate();
+
+  // New product state with default (empty) values
+  const [product, setProduct] = useState({
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+    categoryName: "",
+    brandName: "",
+    genderName: "",
+    colorName: "",
+    sizeName: "",
+  });
+
   const [error, setError] = useState(null);
 
-  const [brands, setBrands] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [colors, setColors] = useState([]);
-  const [sizes, setSizes] = useState([]);
+  // Handle input field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value,
+    }));
+  };
 
-  // Fetch categories, brands, colors, and sizes (could be from an API)
-  useEffect(() => {
-    setBrands(["Adidas", "Nike", "Zara", "Levi's", "H&M"]);
-    setCategories(["Casual Wear", "Formal Wear", "Sports Wear", "Outerwear", "Footwear"]);
-    setColors(["Denim Blue", "Heather Gray", "Olive Green", "Mustard Yellow", "Rust", "Burgundy", "Navy", "Dusty Rose"]);
-    setSizes(["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"]);
-  }, []);
-
+  // Handle form submission to add a new product
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
 
-    if (!name || !description || !price || !quantity || !gender || !brand || !category || !color || !size) {
+    // Basic validation: check if all fields are filled
+    if (
+      !product.name ||
+      !product.description ||
+      !product.price ||
+      !product.quantity ||
+      !product.categoryName ||
+      !product.brandName ||
+      !product.genderName ||
+      !product.colorName ||
+      !product.sizeName
+    ) {
       setError("All fields are required.");
       return;
     }
 
-    const productData = {
-      Name: name,
-      Description: description,
-      Price: parseFloat(price),
-      Quantity: parseInt(quantity),
-      GenderName: gender,
-      BrandName: brand,
-      CategoryName: category,
-      ColorName: color,
-      SizeName: size,
+    // Optionally, convert price and quantity to numeric types before sending
+    const productToSend = {
+      ...product,
+      price: parseFloat(product.price),
+      quantity: parseInt(product.quantity, 10),
     };
 
     try {
-      const response = await fetchWithAuth("https://localhost:7059/api/v1/products", {
+      // Call the POST endpoint to add a new product
+      await fetchWithAuth(`https://localhost:7059/api/v1/products`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productToSend),
       });
 
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message || "Failed to add product.");
-      }
-
-      // Reset form and show success message
-      setName("");
-      setDescription("");
-      setPrice("");
-      setQuantity("");
-      setGender("");
-      setBrand("");
-      setCategory("");
-      setColor("");
-      setSize("");
-      setError(null);
       alert("Product added successfully!");
-    } catch (error) {
-      console.error("Error:", error.message);
-      setError(error.message);
+      navigate("/manage-products");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -86,78 +79,117 @@ function AddProduct() {
       <form onSubmit={handleSubmit} className="add-form">
         <div className="add-form-group">
           <label className="add-label">Name:</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="add-input" required />
+          <input
+            type="text"
+            name="name"
+            value={product.name}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
         </div>
+
         <div className="add-form-group">
           <label className="add-label">Description:</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="add-input" required />
+          <textarea
+            name="description"
+            value={product.description}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
         </div>
+
         <div className="add-form-group">
           <label className="add-label">Price:</label>
-          <input type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} className="add-input" required />
+          <input
+            type="number"
+            step="0.01"
+            name="price"
+            value={product.price}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
         </div>
+
         <div className="add-form-group">
           <label className="add-label">Quantity:</label>
-          <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="add-input" required />
+          <input
+            type="number"
+            name="quantity"
+            value={product.quantity}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
         </div>
-        <div className="add-form-group">
-          <label className="add-label">Gender:</label>
-          <select value={gender} onChange={(e) => setGender(e.target.value)} className="add-input" required>
-            <option value="">Select Gender</option>
-            <option value="MALE">Male</option>
-            <option value="FEMALE">Female</option>
-            <option value="NEUTRAL">Neutral</option>
-          </select>
-        </div>
-        <div className="add-form-group">
-          <label className="add-label">Brand:</label>
-          <select value={brand} onChange={(e) => setBrand(e.target.value)} className="add-input" required>
-            <option value="">Select Brand</option>
-            {brands.map((brandName, index) => (
-              <option key={index} value={brandName}>
-                {brandName}
-              </option>
-            ))}
-          </select>
-        </div>
+
         <div className="add-form-group">
           <label className="add-label">Category:</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)} className="add-input" required>
-            <option value="">Select Category</option>
-            {categories.map((categoryName, index) => (
-              <option key={index} value={categoryName}>
-                {categoryName}
-              </option>
-            ))}
-          </select>
+          <input
+            type="text"
+            name="categoryName"
+            value={product.categoryName}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
         </div>
+
+        <div className="add-form-group">
+          <label className="add-label">Brand:</label>
+          <input
+            type="text"
+            name="brandName"
+            value={product.brandName}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
+        </div>
+
+        <div className="add-form-group">
+          <label className="add-label">Gender:</label>
+          <input
+            type="text"
+            name="genderName"
+            value={product.genderName}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
+        </div>
+
         <div className="add-form-group">
           <label className="add-label">Color:</label>
-          <select value={color} onChange={(e) => setColor(e.target.value)} className="add-input" required>
-            <option value="">Select Color</option>
-            {colors.map((colorName, index) => (
-              <option key={index} value={colorName}>
-                {colorName}
-              </option>
-            ))}
-          </select>
+          <input
+            type="text"
+            name="colorName"
+            value={product.colorName}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
         </div>
+
         <div className="add-form-group">
           <label className="add-label">Size:</label>
-          <select value={size} onChange={(e) => setSize(e.target.value)} className="add-input" required>
-            <option value="">Select Size</option>
-            {sizes.map((sizeLabel, index) => (
-              <option key={index} value={sizeLabel}>
-                {sizeLabel}
-              </option>
-            ))}
-          </select>
+          <input
+            type="text"
+            name="sizeName"
+            value={product.sizeName}
+            onChange={handleChange}
+            className="add-input"
+            required
+          />
         </div>
+
+        {error && <div className="add-error">{error}</div>}
         <button type="submit" className="add-button">
           Add Product
         </button>
       </form>
-      {error && <p className="add-error">{error}</p>}
     </div>
   );
 }

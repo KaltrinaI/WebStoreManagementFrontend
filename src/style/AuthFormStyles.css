@@ -1,9 +1,9 @@
 .auth-container {
-  max-width: 420px;
-  margin: 60px auto;
-  padding: 24px;
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 32px;
   border: 1px solid #b0bec5;
-  border-radius: 14px;
+  border-radius: 16px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
   background-color: #f1f5f9;
   display: flex;
@@ -12,8 +12,8 @@
 
 .auth-title {
   text-align: center;
-  margin-bottom: 24px;
-  font-size: 26px;
+  margin-bottom: 32px;
+  font-size: 30px;
   font-weight: bold;
   color: #37474f;
 }
@@ -21,7 +21,7 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 24px;
   width: 100%;
 }
 
@@ -33,9 +33,9 @@
 .auth-form input,
 .auth-form textarea,
 .auth-form select {
-  padding: 14px;
-  font-size: 17px;
-  border-radius: 10px;
+  padding: 18px;
+  font-size: 20px;
+  border-radius: 12px;
   border: 1px solid #90a4ae;
   background-color: #ffffff;
   outline: none;
@@ -51,9 +51,9 @@
 
 .auth-button,
 .switch-button {
-  padding: 14px;
-  font-size: 18px;
-  border-radius: 10px;
+  padding: 18px;
+  font-size: 20px;
+  border-radius: 12px;
   border: none;
   background-color: #00897b;
   color: #ffffff;
@@ -66,24 +66,24 @@
 .auth-button:hover,
 .switch-button:hover {
   background-color: #00695c;
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .auth-error {
   color: #d32f2f;
   text-align: center;
-  margin-top: 12px;
-  font-size: 15px;
+  margin-top: 16px;
+  font-size: 17px;
 }
 
 .switch-button {
-  margin-top: 22px;
+  margin-top: 26px;
 }
 
 .auth-logo {
   display: block;
-  margin: 0 auto 24px;
-  width: 160px;
+  margin: 15px;
+  width: 180px;
   height: auto;
   filter: drop-shadow(3px 5px 7px rgba(0, 0, 0, 0.2));
 }
@@ -91,6 +91,10 @@
 .auth-success {
   color: #388e3c;
   text-align: center;
-  margin-top: 12px;
-  font-size: 15px;
+  margin-top: 16px;
+  font-size: 17px;
+}
+
+a{
+  color: #00695c;
 }
