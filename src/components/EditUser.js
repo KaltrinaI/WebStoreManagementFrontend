@@ -22,7 +22,7 @@ function EditUser() {
 
   const fetchUserDetails = async () => {
     try {
-      const response = await fetchWithAuth(`${config.backendUrl}/api/v1/users/${userId}`);
+      const response = await fetchWithAuth(`${config.backendUrl}/api/v1/users/${id}`);
       setUser(response.user);
     } catch (err) {
       setError(err.message);
@@ -32,7 +32,7 @@ function EditUser() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await fetchWithAuth(`${config.backendUrl}/api/v1/users/${userId}`, {
+      await fetchWithAuth(`${config.backendUrl}/api/v1/users/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

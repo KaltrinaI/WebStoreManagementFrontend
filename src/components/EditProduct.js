@@ -1,8 +1,8 @@
+import "../style/EditProductStyles.css";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchWithAuth } from "../utils/fetchWithAuth";
 import config from "../config";;
-import "../style/EditProductStyles.css";
 
 
 function EditProduct() {

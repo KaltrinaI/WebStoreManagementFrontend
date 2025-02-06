@@ -7,7 +7,6 @@ import config from "../config";;
 function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +27,6 @@ function SignUp() {
     const registrationData = {
       firstName,
       lastName,
-      address,
       phoneNumber: String(phoneNumber),
       email,
       password,
